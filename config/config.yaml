@@ -1,0 +1,8 @@
+server: 
+  port: 8080
+  readTimeOut: 10s
+  writeTimeout: 10s
+auth: 
+  accessTokenTTL: 15m
+database:
+  migrationPath: file://./internal/repository/PG/migrations
