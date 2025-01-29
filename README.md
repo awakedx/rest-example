@@ -13,9 +13,9 @@ Create .env file with fields
 - DB_PORT=5432
 - DB_NAME=yourdbname
 - SECRET_ACCESS=yoursecret  
-![imgstart](https://github.com/awakedx/rest-example/blob/test/readme/start.png)
+![imgstart](https://github.com/awakedx/rest-example/blob/master/readme/start.png)
 ## If you want run in docker
 - Change DB_HOST=db(named service in docker-compose.yml)  
-![dockerpng](https://github.com/awakedx/rest-example/blob/test/readme/dockerbuild.png)
+![dockerpng](https://github.com/awakedx/rest-example/blob/master/readme/dockerbuild.png)
 ## I deployed this on AWS EC2 in docker , u can test it through
-- http://13.61.25.183:80
+[Swagger doc](http://13.61.25.183/swagger//index.html)
