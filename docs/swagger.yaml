@@ -1,0 +1,260 @@
+definitions:
+  domain.OrderItem:
+    properties:
+      itemId:
+        example: 4
+        type: integer
+      quantity:
+        example: 7
+        type: integer
+    type: object
+  service.InputItem:
+    properties:
+      desc:
+        example: Compact mouse
+        type: string
+      name:
+        example: Wireless mouse
+        type: string
+      price:
+        example: 19.99
+        type: number
+      stock:
+        example: 150
+        type: integer
+    required:
+    - desc
+    - name
+    - price
+    - stock
+    type: object
+  service.InputOrder:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/domain.OrderItem'
+        type: array
+    type: object
+  service.ItemValues:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/service.InputItem'
+        type: array
+    required:
+    - items
+    type: object
+  service.SignInInput:
+    properties:
+      email:
+        example: testmail@gmail.com
+        type: string
+      password:
+        example: password123
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  service.SignUpInput:
+    properties:
+      email:
+        example: testmail@gmail.com
+        type: string
+      firstName:
+        example: Alex
+        type: string
+      lastName:
+        example: Johnson
+        type: string
+      password:
+        example: password123
+        minLength: 8
+        type: string
+    required:
+    - email
+    - firstName
+    - lastName
+    - password
+    type: object
+info:
+  contact: {}
+  title: REST API
+  version: "1.0"
+paths:
+  /items:
+    get:
+      description: Show all items
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: List of items
+      tags:
+      - Items
+    post:
+      consumes:
+      - application/json
+      description: Create new items
+      parameters:
+      - description: List of items
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.ItemValues'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+      summary: New Item
+      tags:
+      - Items
+  /items/{id}:
+    delete:
+      description: Delete item by id
+      parameters:
+      - description: Item id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Delete
+      tags:
+      - Items
+    get:
+      description: Search item by id
+      parameters:
+      - description: Item id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Item by id
+      tags:
+      - Items
+  /orders:
+    get:
+      description: List of orders,need to be authnorized (sign-in to get cookie)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      security:
+      - cookieAuth: []
+      summary: List of your orders
+      tags:
+      - Orders
+    post:
+      consumes:
+      - application/json
+      description: Create order, need to be authnorized (sign-in to get cookie)
+      parameters:
+      - description: Order details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.InputOrder'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+      security:
+      - cookieAuth: []
+      summary: Create order
+      tags:
+      - Orders
+  /orders/{id}:
+    get:
+      description: Order by id,need to be authnorized (sign-in to get cookie)
+      parameters:
+      - description: Id of your order
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      security:
+      - cookieAuth: []
+      summary: Show specific order
+      tags:
+      - Orders
+  /sign-in:
+    post:
+      consumes:
+      - application/json
+      description: SignIn
+      parameters:
+      - description: Sign-in details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: User sign-in
+      tags:
+      - Users
+  /sign-up:
+    post:
+      consumes:
+      - application/json
+      description: Creation new user
+      parameters:
+      - description: Sign-up details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.SignUpInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+      summary: User sign-up
+      tags:
+      - Users
+swagger: "2.0"

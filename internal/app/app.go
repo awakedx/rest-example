@@ -4,8 +4,10 @@ import (
 	"context"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/swaggo/echo-swagger"
 	"log/slog"
 	"net/http"
+	_ "webproj/docs"
 	"webproj/internal/config"
 	"webproj/internal/controller"
 	"webproj/internal/lib"
@@ -15,6 +17,8 @@ import (
 	"webproj/internal/service"
 )
 
+//	@title		REST API
+//	@version	1.0
 func Run() {
 	ctx := context.Background()
 
@@ -66,6 +70,7 @@ func Run() {
 	OrderRoute.GET("", orderHandler.GetAll, mineMW.AuthMW)
 	OrderRoute.GET("/:id", orderHandler.GetById, mineMW.AuthMW)
 	OrderRoute.POST("", orderHandler.MakeOrder, mineMW.AuthMW)
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	// Start server
 	err = e.StartServer(&http.Server{

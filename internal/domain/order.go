@@ -14,7 +14,7 @@ type Order struct {
 }
 
 type OrderItem struct {
-	ItemId   int     `json:"itemId"`
-	Quantity int     `json:"quantity"`
-	Price    float64 `json:"price"`
+	ItemId   int     `json:"itemId" example:"4"`
+	Quantity int     `json:"quantity" example:"7"`
+	Price    float64 `json:"price" swaggerignore:"true"`
 }

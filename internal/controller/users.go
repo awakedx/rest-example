@@ -24,6 +24,15 @@ func NewUserHandler(ctx context.Context, services *service.Services) *UserHandle
 	}
 }
 
+// @Summary		User sign-up
+// @Description	Creation new user
+// @Tags			Users
+// @Accept			json
+// @Produce		json
+// @Param			body	body	service.SignUpInput	true	"Sign-up details"
+// @Success		201
+// @Failure		400
+// @Router			/sign-up [post]
 func (h *UserHandler) SignUp(ctx echo.Context) error {
 	var signUpInput service.SignUpInput
 	err := ctx.Bind(&signUpInput)
@@ -41,6 +50,15 @@ func (h *UserHandler) SignUp(ctx echo.Context) error {
 	return ctx.JSON(http.StatusCreated, "user successfully created")
 }
 
+// @Summary		User sign-in
+// @Description	SignIn
+// @Tags			Users
+// @Accept			json
+// @Produce		json
+// @Param			body	body	service.SignInInput	true	"Sign-in details"
+// @Success		200
+// @Failure		400
+// @Router			/sign-in [post]
 func (h *UserHandler) SignIn(ctx echo.Context) error {
 	var signInInput service.SignInInput
 	err := ctx.Bind(&signInInput)

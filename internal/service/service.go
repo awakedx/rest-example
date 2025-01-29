@@ -29,22 +29,22 @@ func NewServices(deps Deps) *Services {
 }
 
 type SignUpInput struct {
-	FirstName string `json:"firstName" validate:"required"`
-	LastName  string `json:"lastName" validate:"required"`
-	Email     string `json:"email" validate:"required,email"`
-	Password  string `json:"password" validate:"required,min=8"`
+	FirstName string `json:"firstName" validate:"required" example:"Alex"`
+	LastName  string `json:"lastName" validate:"required" example:"Johnson"`
+	Email     string `json:"email" validate:"required,email" example:"testmail@gmail.com"`
+	Password  string `json:"password" validate:"required,min=8" example:"password123"`
 }
 
 type SignInInput struct {
-	Email    string `json:"email" validate:"required,email"`
-	Password string `json:"password" validate:"required,min=8"`
+	Email    string `json:"email" validate:"required,email" example:"testmail@gmail.com"`
+	Password string `json:"password" validate:"required,min=8" example:"password123"`
 }
 
 type InputItem struct {
-	Name        string  `json:"name" validate:"required"`
-	Description string  `json:"desc" validate:"required"`
-	Price       float64 `json:"price" validate:"required"`
-	Stock       int     `json:"stock" validate:"required"`
+	Name        string  `json:"name" validate:"required" example:"Wireless mouse"`
+	Description string  `json:"desc" validate:"required" example:"Compact mouse"`
+	Price       float64 `json:"price" validate:"required" example:"19.99"`
+	Stock       int     `json:"stock" validate:"required" example:"150"`
 }
 
 type ItemValues struct {
@@ -52,7 +52,7 @@ type ItemValues struct {
 }
 
 type InputOrder struct {
-	UserId uuid.UUID          `json:"userId"`
+	UserId uuid.UUID          `json:"userId" swaggerignore:"true"`
 	Items  []domain.OrderItem `json:"items"`
 }
 

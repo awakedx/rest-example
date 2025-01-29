@@ -21,6 +21,16 @@ func NewOrderHandler(ctx context.Context, service *service.Services) *OrderHandl
 	}
 }
 
+// @Summary		Create order
+// @Description	 Create order, need to be authnorized (sign-in to get cookie)
+// @Tags			Orders
+// @Accept json
+// @Produce		json
+// @Param body body service.InputOrder true "Order details"
+// @Success		201
+// @Failure		400
+// @Router			/orders [post]
+// @Security cookieAuth
 func (h *OrderHandler) MakeOrder(ctx echo.Context) error {
 	var input service.InputOrder
 	err := ctx.Bind(&input)
@@ -44,6 +54,15 @@ func (h *OrderHandler) MakeOrder(ctx echo.Context) error {
 		})
 	}
 }
+
+// @Summary		List of your orders
+// @Description	 List of orders,need to be authnorized (sign-in to get cookie)
+// @Tags			Orders
+// @Produce		json
+// @Success		200
+// @Failure		400
+// @Router			/orders [get]
+// @Security cookieAuth
 func (h *OrderHandler) GetAll(ctx echo.Context) error {
 	userId, err := service.GetUserIdClaims(ctx)
 	if err != nil {
@@ -54,6 +73,16 @@ func (h *OrderHandler) GetAll(ctx echo.Context) error {
 		"Orders": orders,
 	})
 }
+
+// @Summary		Show specific order
+// @Description	 Order by id,need to be authnorized (sign-in to get cookie)
+// @Tags			Orders
+// @Produce		json
+// @Param id path int true "Id of your order"
+// @Success		200
+// @Failure		400
+// @Router			/orders/{id} [get]
+// @Security cookieAuth
 func (h *OrderHandler) GetById(ctx echo.Context) error {
 	orderId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

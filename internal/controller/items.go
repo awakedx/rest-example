@@ -21,6 +21,15 @@ func NewItemHandler(ctx context.Context, services *service.Services) *ItemHandle
 	}
 }
 
+// @Summary		New Item
+// @Description	Create new items
+// @Tags			Items
+// @Accept			json
+// @Produce		json
+// @Param			body	body	service.ItemValues	true	"List of items"
+// @Success		201
+// @Failure		400
+// @Router			/items [post]
 func (h *ItemHandler) NewItem(ctx echo.Context) error {
 	var itemValue service.ItemValues
 	err := ctx.Bind(&itemValue)
@@ -40,6 +49,14 @@ func (h *ItemHandler) NewItem(ctx echo.Context) error {
 	return ctx.JSON(http.StatusCreated, "Item successfully created")
 }
 
+// @Summary		Delete
+// @Description	Delete item by id
+// @Tags			Items
+// @Param			id	path	int	true	"Item id"
+// @Produce		json
+// @Success		200
+// @Failure		400
+// @Router			/items/{id} [delete]
 func (h *ItemHandler) Delete(ctx echo.Context) error {
 	itemId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -56,6 +73,13 @@ func (h *ItemHandler) Delete(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "Item successfully deleted")
 }
 
+// @Summary		List of items
+// @Description	Show all items
+// @Tags			Items
+// @Produce		json
+// @Success		200
+// @Failure		500
+// @Router			/items [get]
 func (h *ItemHandler) GetAll(ctx echo.Context) error {
 	i, err := h.services.Items.GetAll(ctx.Request().Context())
 	if err != nil {
@@ -65,6 +89,15 @@ func (h *ItemHandler) GetAll(ctx echo.Context) error {
 		"items": i,
 	})
 }
+
+// @Summary		Item by id
+// @Description	Search item by id
+// @Tags			Items
+// @Param			id	path	int	true	"Item id"
+// @Produce		json
+// @Success		200
+// @Failure		400
+// @Router			/items/{id} [get]
 func (h *ItemHandler) Get(ctx echo.Context) error {
 	itemId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
