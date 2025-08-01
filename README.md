@@ -17,5 +17,3 @@ Create .env file with fields
 ## If you want run in docker
 - Change DB_HOST=db(named service in docker-compose.yml)  
 ![dockerpng](https://github.com/awakedx/rest-example/blob/master/readme/dockerbuild.png)
-## I deployed this on AWS EC2 in docker , u can test it through
-[Swagger doc](http://13.61.25.183/swagger//index.html)
